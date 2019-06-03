@@ -6,6 +6,13 @@ refresh-base-images:
 	grep 'FROM' **/Dockerfile | cut -d ' ' -f 2 | xargs -L 1 docker pull
 
 
+build.circleci_python27_node10_browsers:
+	docker build -f circleci-python27-node10-browsers/Dockerfile . --tag=kotify/circleci:python27-node10-browsers
+push.circleci_python27_node10_browsers:
+	docker push kotify/circleci:python27-node10-browsers
+publish.circleci_python27_node10_browsers: build.circleci_python27_node10_browsers push.circleci_python27_node10_browsers
+
+
 build.circleci_python37_node10_aws:
 	docker build -f circleci-python37-node10-aws/Dockerfile . --tag=kotify/circleci:python37-node10-aws
 push.circleci_python37_node10_aws:
@@ -34,4 +41,4 @@ push.python_2_7_node_browsers:
 publish.python_2_7_node_browsers: build.python_2_7_node_browsers push.python_2_7_node_browsers
 
 
-publish.all: publish.circleci_python37_node10_aws publish.circleci_python37_node10_browsers_aws publish.postgres_non_durable publish.python_2_7_node_browsers
+publish.all: publish.circleci_python27_node10_browsers publish.circleci_python37_node10_aws publish.circleci_python37_node10_browsers_aws publish.postgres_non_durable publish.python_2_7_node_browsers
