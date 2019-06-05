@@ -3,10 +3,15 @@
 gen () {
     local TAG=kotify/`echo $1 | sed 's/-/:/'`
     local NAME=`echo $1 | sed 's/[^a-zA-Z0-9]/_/g'`
-    echo "build.$NAME": >> Makefile
+    local TAG_PIN=$TAG-`date +%y%m%d`
+    echo "build.$NAME:" >> Makefile
     echo "	docker build -f $1/Dockerfile . --tag=$TAG" >> Makefile
-    echo "push.$NAME": >> Makefile
+    echo "push.$NAME:" >> Makefile
     echo "	docker push $TAG" >> Makefile
+    echo "pin.$NAME: build.$NAME" >> Makefile
+    echo "	docker tag $TAG $TAG_PIN" >> Makefile
+    echo "publish.pin.$NAME: pin.$NAME" >> Makefile
+    echo "	docker push $TAG_PIN" >> Makefile
     echo "publish.$NAME: build.$NAME push.$NAME" >> Makefile
     echo '' >> Makefile
     echo '' >> Makefile
