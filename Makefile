@@ -40,13 +40,13 @@ publish.circleci_python37_node10_browsers_aws: build.circleci_python37_node10_br
 
 
 build.postgres_non_durable:
-	docker build -f postgres-non-durable/Dockerfile . --tag=kotify/postgres:non-durable
+	docker build -f postgres-non-durable/Dockerfile . --tag=kotify/postgres-non-durable
 push.postgres_non_durable:
-	docker push kotify/postgres:non-durable
+	docker push kotify/postgres-non-durable
 pin.postgres_non_durable: build.postgres_non_durable
-	docker tag kotify/postgres:non-durable kotify/postgres:non-durable-190605
+	docker tag kotify/postgres-non-durable kotify/postgres-non-durable-190605
 publish.pin.postgres_non_durable: pin.postgres_non_durable
-	docker push kotify/postgres:non-durable-190605
+	docker push kotify/postgres-non-durable-190605
 publish.postgres_non_durable: build.postgres_non_durable push.postgres_non_durable
 
 
