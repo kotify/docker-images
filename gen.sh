@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 gen () {
+    local DATE=`date +%y%m%d`
     local TAG=kotify/`echo $1 | sed 's/-/:/'`
     local NAME=`echo $1 | sed 's/[^a-zA-Z0-9]/_/g'`
-    local TAG_PIN=$TAG-`date +%y%m%d`
+    local TAG_PIN=`echo $TAG | grep -q ':' && echo $TAG-$DATE || echo $TAG:$DATE`
     echo "build.$NAME:" >> Makefile
     echo "	docker build -f $1/Dockerfile . --tag=$TAG" >> Makefile
     echo "push.$NAME:" >> Makefile
@@ -28,7 +29,7 @@ refresh-base-images:
 
 EOF
 
-for f in `ls | grep -`; do gen $f; done
+for f in `find . -name Dockerfile | rev | cut -d '/' -f 2 | rev | sort`; do gen $f; done
 
 echo -n 'publish.all:' >> Makefile
 
