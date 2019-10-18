@@ -17,14 +17,13 @@ def run():
         output = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf")
         output.write(f.read())
     try:
-        subprocess.check_output(
-            f"pdftotext --help", stderr=subprocess.STDOUT, shell=True
-        )
-    except subprocess.CalledProcessError:
-        print(
-            "You need to install pdftotext in order to print resulting pdf to console."
-        )
-        return
+        subprocess.check_output(f"pdftotext -v", shell=True)
+    except subprocess.CalledProcessError as exc:
+        if exc.returncode != 99:
+            print(
+                "You need to install pdftotext in order to print resulting pdf to console."
+            )
+            return
     print(f"PDF written to:\n{output.name}")
     text = subprocess.check_output(
         f"pdftotext {output.name} -", stderr=subprocess.STDOUT, shell=True
