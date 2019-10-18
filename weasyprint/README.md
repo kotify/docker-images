@@ -8,3 +8,10 @@ Make http request to `http://localhost:8139/print/` endpoint with formdata:
 
     html: text of the html to convert to pdf
     filename: optional filename of the resulted pdf
+
+
+## Development
+
+Run `docker-compose up`
+
+To test general functionaliy run `./test.py`
