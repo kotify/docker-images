@@ -7,6 +7,7 @@ import urllib.request
 HTML = """<html><body>
 <h1>Testing PDF</h1>
 <p>Some text</p>
+<p><span>☒</span>&nbsp;<span>⬆️</span>&nbsp;&nbsp;<span>❤️</span></p>
 </body></html>"""
 
 

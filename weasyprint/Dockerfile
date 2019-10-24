@@ -1,7 +1,7 @@
 FROM alpine:3.10
 ENV PYTHONUNBUFFERED 1
 
-RUN apk add --no-cache python3 cairo pango jpeg-dev \
+RUN apk add --no-cache python3 cairo pango jpeg-dev ttf-dejavu \
     && apk add --no-cache --virtual build-dependencies build-base linux-headers pcre-dev python3-dev libffi-dev musl-dev zlib-dev gcc glib msttcorefonts-installer ca-certificates \
     && update-ms-fonts \
     && fc-cache -f \
