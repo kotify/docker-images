@@ -6,14 +6,14 @@ gen () {
     local NAME=`echo $1 | sed 's/[^a-zA-Z0-9]/_/g'`
     local TAG_PIN=`echo $TAG | grep -q ':' && echo $TAG-$DATE || echo $TAG:$DATE`
     echo "build.$NAME:" >> Makefile
-    echo "	docker build -f $1/Dockerfile . --tag=$TAG" >> Makefile
+    echo "	(cd $1; docker build . --tag=$TAG)" >> Makefile
     echo "push.$NAME:" >> Makefile
     echo "	docker push $TAG" >> Makefile
     echo "pin.$NAME: build.$NAME" >> Makefile
     echo "	docker tag $TAG $TAG_PIN" >> Makefile
     echo "publish.pin.$NAME: pin.$NAME" >> Makefile
     echo "	docker push $TAG_PIN" >> Makefile
-    echo "publish.$NAME: build.$NAME push.$NAME" >> Makefile
+    echo "publish.$NAME: build.$NAME push.$NAME publish.pin.$NAME" >> Makefile
     echo '' >> Makefile
     echo '' >> Makefile
 }

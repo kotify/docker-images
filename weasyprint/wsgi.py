@@ -7,11 +7,6 @@ from weasyprint import HTML
 app = Flask("printer")
 
 
-@app.route("/health")
-def index():
-    return "ok"
-
-
 @app.route("/version")
 def version_index():
     return weasyprint.__version__
