@@ -16,4 +16,4 @@ WORKDIR /opt
 
 EXPOSE 8139
 
-CMD [ "gunicorn", "-b", "8139", "wsgi:app" ]
+CMD [ "gunicorn", "-b", "0.0.0.0:8139", "wsgi:app" ]
