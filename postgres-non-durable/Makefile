@@ -1,4 +1,4 @@
-all: push.10 push.11 push.12
+all: push.10 push.11 push.12 push.13 push.14
 
 pull.%:
 	docker pull postgres:$(subst pull.,,$@)-alpine
