@@ -1,0 +1,14 @@
+ARG POSTGRES_VERSION
+###
+FROM postgres:${POSTGRES_VERSION}-alpine as builder
+
+RUN apk add make git gcc libc-dev
+RUN git clone https://gitlab.com/dalibo/postgresql_anonymizer.git
+RUN cd postgresql_anonymizer/ && make && make extension && make install
+
+###
+FROM postgres:${POSTGRES_VERSION}-alpine
+
+COPY --from=builder /usr/local/share/postgresql /usr/local/share/postgresql
+COPY --from=builder /usr/local/lib/postgresql /usr/local/lib/postgresql
+COPY non-durable-settings.sh /docker-entrypoint-initdb.d/01-non-durable-settings.sh
