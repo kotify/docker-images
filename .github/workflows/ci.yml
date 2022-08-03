@@ -43,3 +43,6 @@ jobs:
           context: ./postgres
           build-args: |
             POSTGRES_VERSION=${{ matrix.version }}
+          platforms: |
+            linux/amd64
+            linux/arm64
