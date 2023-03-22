@@ -2,9 +2,11 @@ ARG POSTGRES_VERSION
 ###
 FROM postgres:${POSTGRES_VERSION}-alpine as builder
 
-RUN apk add make git gcc libc-dev clang llvm
-RUN git clone --depth=1 https://gitlab.com/dalibo/postgresql_anonymizer.git
-RUN cd postgresql_anonymizer && make && make install
+RUN apk add make curl gcc libc-dev clang llvm
+RUN curl https://gitlab.com/dalibo/postgresql_anonymizer/-/archive/1.1.0/postgresql_anonymizer-1.1.0.tar.gz -o anon.tar.gz && \
+  mkdir anon && \
+  tar zxvf anon.tar.gz -C anon --strip-components 1
+RUN cd anon && make && make install
 
 ###
 FROM postgres:${POSTGRES_VERSION}-alpine
