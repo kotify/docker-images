@@ -4,4 +4,5 @@ cat <<EOF >> /var/lib/postgresql/data/postgresql.conf
 fsync = off
 synchronous_commit = off
 full_page_writes = off
+wal_level = minimal
 EOF
