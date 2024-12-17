@@ -1,15 +1,17 @@
-ARG POSTGRES_VERSION
+ARG POSTGRES_VERSION=latest
 ###
-FROM postgres:${POSTGRES_VERSION}-alpine as builder
+FROM postgres:${POSTGRES_VERSION}-alpine AS builder
 
-RUN apk add make curl gcc libc-dev clang15 llvm15
+ARG POSTGRES_VERSION
+
+RUN apk add make curl clang19 llvm19
 RUN curl https://gitlab.com/dalibo/postgresql_anonymizer/-/archive/1.3.2/postgresql_anonymizer-1.3.2.tar.gz -o anon.tar.gz && \
   mkdir anon && \
   tar zxvf anon.tar.gz -C anon --strip-components 1
 RUN cd anon && make && make install
 
 ###
-FROM postgres:${POSTGRES_VERSION}-alpine
+FROM postgres:${POSTGRES_VERSION}-alpine AS final
 
 COPY --from=builder /usr/local/share/postgresql /usr/local/share/postgresql
 COPY --from=builder /usr/local/lib/postgresql /usr/local/lib/postgresql
