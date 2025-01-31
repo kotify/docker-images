@@ -7,6 +7,7 @@ full_page_writes = off
 max_wal_size = '4GB'
 checkpoint_timeout = '1d'
 
+max_connections = 200
 max_locks_per_transaction = 128
 wal_level = minimal
 max_wal_senders = 0
